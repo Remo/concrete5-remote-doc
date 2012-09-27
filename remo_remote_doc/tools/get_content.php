@@ -12,7 +12,7 @@ $blocks = $p->getBlocks();
 foreach ($blocks as $block) {
     // TODO we don't care about JavaScripts at this point, they would probably
     // break anyways... To be verified..
-    if (in_array($block->getBlockTypeHandle(), array('content'))) {
+    if (in_array($block->getBlockTypeHandle(), array('content', 'remo_remote_comment'))) {
         $block->display();
     }
 }
