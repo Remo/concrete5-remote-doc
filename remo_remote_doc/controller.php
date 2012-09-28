@@ -5,7 +5,7 @@ class RemoRemoteDocPackage extends Package {
 
     protected $pkgHandle = 'remo_remote_doc';
     protected $appVersionRequired = '5.6.0';
-    protected $pkgVersion = '0.0.2';
+    protected $pkgVersion = '0.0.4';
     private $pkg;
 
     public function getPackageName() {
@@ -38,9 +38,6 @@ class RemoRemoteDocPackage extends Package {
         
         $this->pkg = Package::getByHandle($this->pkgHandle);
                 
-        // Install blocks
-        BlockType::installBlockTypeFromPackage('remo_remote_comment', $this->pkg);
-
     }
 
 }

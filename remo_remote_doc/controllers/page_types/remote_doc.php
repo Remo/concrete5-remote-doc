@@ -64,14 +64,17 @@ class RemoteDocPageTypeController extends Controller {
         $c = Page::getCurrentPage();
         $remoteDocUrl = $c->getAttribute('remote_doc_url');
         $remoteDocBase = $c->getAttribute('remote_doc_base');
-
+        
+        if ($remoteDocUrl == '') {
+            $this->set('docContent', t('Please specify the remote doc server in the attributes remote_doc_url and remote_doc_base.'));
+            return;
+        }
+        
         $docContent = file_get_contents($remoteDocUrl . '/index.php/tools/packages/remo_remote_doc/get_content?docPath=' . $remoteDocBase . $path);
 
-        // replace absolute links
-        $docContent = str_replace($remoteDocUrl . $remoteDocBase, $nh->getLinkToCollection($c), $docContent);
         // replace relative links
-        $docContent = str_replace($remoteDocBase, $nh->getLinkToCollection($c), $docContent);
-
+        $docContent = str_replace($remoteDocBase . '/', $nh->getLinkToCollection($c), $docContent);
+        
         $this->set('docContent', $docContent);
     }
 

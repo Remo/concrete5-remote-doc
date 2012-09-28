@@ -4,9 +4,15 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 
 <?php
-// TODO post this to master server.. somehow..
+foreach ($comments as $comment) {
+    echo "<div style=\"border: 1px solid gray;margin-bottom: 5px;\">{$comment['comment']}</div>";
+} 
 ?>
-<form method="post" action="<?php echo $this->action('new_comment')?>">
-<textarea name="message"></textarea>
+<form method="post" action="<?php echo $actionUrl?>">
+<input type="hidden" name="bID" value="<?php echo $bID?>"/>
+<br/>
+<textarea name="comment"></textarea>
+<br/>
+<input type="submit" value="<?php echo t('Post Comment')?>"/>
 </form>
 

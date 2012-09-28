@@ -7,4 +7,16 @@
         </field>
         <field name="commentingEnabled" type="I" size="1"></field>
     </table>
+    <table name="btRemoRemoteCommentComment">    
+        <field name="mID" type="I">
+            <key />
+            <autoincrement />
+            <unsigned />
+        </field>
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="comment" type="X2"></field>
+    </table>
 </schema>
