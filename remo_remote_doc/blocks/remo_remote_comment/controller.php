@@ -30,8 +30,13 @@ class RemoRemoteCommentBlockController extends BlockController {
         
     }
 
-    public function view() {
-        
+    public function view() {        
+        $th = Loader::helper('concrete/urls');
+        $this->set('actionUrl', BASE_URL . $th->getToolsURL('post_comment', 'remo_remote_doc'));  
+
+        $db = Loader::db();
+        $comments = $db->GetAll('SELECT comment FROM btRemoRemoteCommentComment WHERE bID=? ORDER BY mID desc', array($this->bID));
+        $this->set('comments', $comments);
     }
 
 }
