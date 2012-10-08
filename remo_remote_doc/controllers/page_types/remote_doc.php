@@ -61,6 +61,7 @@ class RemoteDocPageTypeController extends Controller {
      */
     private function renderRemotePage($path) {
         $nh = Loader::helper('navigation');
+        $jh = Loader::helper('json');
         $c = Page::getCurrentPage();
         $remoteDocUrl = $c->getAttribute('remote_doc_url');
         $remoteDocBase = $c->getAttribute('remote_doc_base');
@@ -70,8 +71,17 @@ class RemoteDocPageTypeController extends Controller {
             return;
         }
         
-        $docContent = file_get_contents($remoteDocUrl . '/index.php/tools/packages/remo_remote_doc/get_content?docPath=' . $remoteDocBase . $path);
-
+        $docJson = file_get_contents($remoteDocUrl . '/index.php/tools/packages/remo_remote_doc/get_content?docPath=' . $remoteDocBase . $path);
+        $docObj = $jh->decode($docJson);
+        
+        $docContent = $docObj->content;
+        $docHeaderElements = $docObj->headerElements;
+        if (is_array($docHeaderElements)) {
+            foreach ($docHeaderElements as $docHeaderElement) {
+                $this->addHeaderItem($docHeaderElement);
+            }
+        }
+        
         // replace relative links
         $docContent = str_replace($remoteDocBase . '/', $nh->getLinkToCollection($c), $docContent);
         
